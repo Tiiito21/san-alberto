@@ -5,6 +5,11 @@ const getTotal = async (type:string) => {
   return total.length > 0 ? total[0].cantidad : 0
 }
 
+const getAll = async () => {
+  const tipos = await sql`SELECT * FROM tipos_entradas`
+  return tipos
+}
+
 const increase = async (type:string) => {
   try {
     await sql`
@@ -37,4 +42,4 @@ const decrease = async (type:string) => {
   }
 }
 
-export { getTotal, increase, decrease }
+export { getTotal, getAll, increase, decrease }

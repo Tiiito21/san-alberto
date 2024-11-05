@@ -1,4 +1,5 @@
 import { getTotal, increase, decrease } from '@/database/functions'
+import { type NextRequest } from 'next/server'
 
 export async function POST (request: Request) {
   const { tipoEntrada, accion } = await request.json()
@@ -22,9 +23,9 @@ export async function POST (request: Request) {
   }
 }
 
-export async function GET (request: Request) {
-  const url = new URL(request.url)
-  const tipoEntrada = url.searchParams.get('tipoEntrada') || ''
+export async function GET (request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams
+  const tipoEntrada = searchParams.get('tipoEntrada') || ''
 
   try {
     const total = await getTotal(tipoEntrada)

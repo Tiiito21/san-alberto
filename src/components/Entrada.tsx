@@ -7,7 +7,7 @@ const Entrada = ({ tipoEntrada }: { tipoEntrada: string }) => {
 
   const fetchingData = async (tipo: string, accion: string) => {
     try {
-      const response = await fetch('https://san-alberto.vercel.app//api', {
+      const response = await fetch('https://san-alberto.vercel.app/api', {
         method: 'POST',
         body: JSON.stringify({ tipoEntrada: tipo, accion }),
         headers: {
@@ -23,7 +23,7 @@ const Entrada = ({ tipoEntrada }: { tipoEntrada: string }) => {
 
   const getTotal = async (tipo: string) => {
     try {
-      const response = await fetch(`https://san-alberto.vercel.app//api?tipoEntrada=${tipo}`, {
+      const response = await fetch(`https://san-alberto.vercel.app/api?tipoEntrada=${tipo}`, {
         method: 'GET'
       })
       const { total } = await response.json()
@@ -57,7 +57,7 @@ const Entrada = ({ tipoEntrada }: { tipoEntrada: string }) => {
           >
             <Flecha />
           </button>
-          <h1 className='py-5 px-10 flex overflow-hidden items-center justify-center font-bold text-6xl md:text-2xl lg:text-4xl xl:text-5xl '>{tipoEntrada}</h1>
+          <h1 className='py-5 px-10 flex overflow-hidden items-center justify-center font-bold text-5xl sm:text-4xl md:text-2xl lg:text-4xl xl:text-5xl '>{tipoEntrada}</h1>
           <button className="bg-gray-300 flex justify-center items-center hover:text-white"
             onClick={decreaseButton}
           >

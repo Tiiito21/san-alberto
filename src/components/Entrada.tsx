@@ -7,7 +7,7 @@ const Entrada = ({ tipoEntrada }: { tipoEntrada: string }) => {
 
   const fetchingData = async (tipo: string, accion: string) => {
     try {
-      const response = await fetch('http://localhost:3000/api', {
+      const response = await fetch('https://san-alberto.vercel.app//api', {
         method: 'POST',
         body: JSON.stringify({ tipoEntrada: tipo, accion }),
         headers: {
@@ -23,7 +23,7 @@ const Entrada = ({ tipoEntrada }: { tipoEntrada: string }) => {
 
   const getTotal = async (tipo: string) => {
     try {
-      const response = await fetch(`http://localhost:3000/api?tipoEntrada=${tipo}`, {
+      const response = await fetch(`https://san-alberto.vercel.app//api?tipoEntrada=${tipo}`, {
         method: 'GET'
       })
       const { total } = await response.json()

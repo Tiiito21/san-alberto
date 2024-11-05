@@ -24,7 +24,7 @@ export async function POST (request: Request) {
 
 export async function GET (request: Request) {
   const url = new URL(request.url)
-  const tipoEntrada = url.searchParams.get('tipoEntrada')
+  const tipoEntrada = url.searchParams.get('tipoEntrada') || ''
 
   try {
     const total = await getTotal(tipoEntrada)

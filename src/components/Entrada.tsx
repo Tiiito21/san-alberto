@@ -43,7 +43,6 @@ const Entrada = ({ tipoEntrada }: { tipoEntrada: string }) => {
     getTotal(tipoEntrada).then((totalGET) => {
       setTotal(totalGET)
       setDinero(totalGET * precio)
-
     })
   }, [])
 
@@ -54,10 +53,6 @@ const Entrada = ({ tipoEntrada }: { tipoEntrada: string }) => {
   const decreaseButton = async () => {
     await fetchingData(tipoEntrada, 'decrease')
   }
-
-
-  useEffect(() => {
-    setDinero(total * )
 
   return (
 

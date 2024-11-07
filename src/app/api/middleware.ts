@@ -1,42 +1,36 @@
-import { NextRequest, NextResponse } from 'next/server'
+// middleware.ts
 
-const allowedOrigins = ['https://san-alberto.vercel.app/', 'http://localhost:3000']
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
-const corsOptions = {
-  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization'
-}
+// Lista de orígenes permitidos
+const allowedOrigins = ['http://localhost:3000', 'https://san-alberto.vercel.app']
 
 export function middleware (request: NextRequest) {
-  // Check the origin from the request
-  const origin = request.headers.get('origin') ?? ''
-  const isAllowedOrigin = allowedOrigins.includes(origin)
+  const origin = request.headers.get('origin')
 
-  // Handle preflighted requests
-  const isPreflight = request.method === 'OPTIONS'
+  // Verifica si el origen está en la lista de permitidos
+  if (origin && allowedOrigins.includes(origin)) {
+    const response = NextResponse.next()
 
-  if (isPreflight) {
-    const preflightHeaders = {
-      ...(isAllowedOrigin && { 'Access-Control-Allow-Origin': origin }),
-      ...corsOptions
-    }
-    return NextResponse.json({}, { headers: preflightHeaders })
-  }
-
-  // Handle simple requests
-  const response = NextResponse.next()
-
-  if (isAllowedOrigin) {
+    // Configura los encabezados CORS para el origen permitido
     response.headers.set('Access-Control-Allow-Origin', origin)
+    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type')
+
+    // Manejo de las solicitudes preflight OPTIONS
+    if (request.method === 'OPTIONS') {
+      return new NextResponse(null, { status: 200, headers: response.headers })
+    }
+
+    return response
   }
 
-  Object.entries(corsOptions).forEach(([key, value]) => {
-    response.headers.set(key, value)
-  })
-
-  return response
+  // Si el origen no está permitido, deniega el acceso
+  return new NextResponse('Origen no permitido', { status: 403 })
 }
 
+// Configuración para aplicar el middleware solo en las rutas de `/api`
 export const config = {
   matcher: '/api/:path*'
 }

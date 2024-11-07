@@ -7,7 +7,7 @@ const Entrada = ({ tipoEntrada }: { tipoEntrada: string }) => {
 
   const [dinero, setDinero] = useState(0)
 
-  const precio = tipoEntrada == 'MARTES' ? 5 : tipoEntrada == 'JUEVES_1' ? 7 : tipoEntrada == 'JUEVES_2' ? 7 : tipoEntrada == 'JUEVES_3' ? 9 : tipoEntrada == 'SABADO' ? 10 : tipoEntrada == 'CAPEA' ? 25 : tipoEntrada == 'VIPS_ROPA' ? 3 : tipoEntrada == 'VIPS_BEBIDA' ? 3 : tipoEntrada == 'VIPS_NORMAL' ? 7 : 0
+  const precio = tipoEntrada === 'MARTES' ? 5 : tipoEntrada === 'JUEVES_1' ? 7 : tipoEntrada === 'JUEVES_2' ? 7 : tipoEntrada === 'JUEVES_3' ? 9 : tipoEntrada === 'SABADO' ? 10 : tipoEntrada === 'CAPEA' ? 25 : tipoEntrada === 'VIPS_ROPA' ? 3 : tipoEntrada === 'VIPS_BEBIDA' ? 3 : tipoEntrada === 'VIPS_NORMAL' ? 7 : 0
 
   const fetchingData = async (tipo: string, accion: string) => {
     try {
@@ -70,7 +70,7 @@ const Entrada = ({ tipoEntrada }: { tipoEntrada: string }) => {
             <Flecha rotated />
           </button>
           <p className='text-xl text-center font-semibold'>TOTAL: {total}</p>
-          <p className='text-xl text-center font-semibold'>DINERO: {total}</p>
+          <p className='text-xl text-center font-semibold'>DINERO: {dinero}</p>
           </ >
 
       </div>

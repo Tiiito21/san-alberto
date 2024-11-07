@@ -5,6 +5,10 @@ import { useState, useEffect } from 'react'
 const Entrada = ({ tipoEntrada }: { tipoEntrada: string }) => {
   const [total, setTotal] = useState(null)
 
+  const [dinero, setDinero] = useState(0)
+
+  const precio = tipoEntrada == 'MARTES' ? 5 : tipoEntrada == 'JUEVES_1' ? 7 : tipoEntrada == 'JUEVES_2' ? 7 : tipoEntrada == 'JUEVES_3' ? 9 : tipoEntrada == 'SABADO' ? 10 : tipoEntrada == 'CAPEA' ? 25 : tipoEntrada == 'VIPS_ROPA' ? 3 : tipoEntrada == 'VIPS_BEBIDA' ? 3 : tipoEntrada == 'VIPS_NORMAL' ? 7 : 0
+
   const fetchingData = async (tipo: string, accion: string) => {
     try {
       const response = await fetch('https://san-alberto.vercel.app/api', {
@@ -16,6 +20,7 @@ const Entrada = ({ tipoEntrada }: { tipoEntrada: string }) => {
       })
       const { nuevaCantidad } = await response.json()
       setTotal(nuevaCantidad)
+      setDinero(nuevaCantidad * precio)
     } catch (error) {
       console.error('Error al actualizar la cantidad:', error)
     }
@@ -37,6 +42,8 @@ const Entrada = ({ tipoEntrada }: { tipoEntrada: string }) => {
   useEffect(() => {
     getTotal(tipoEntrada).then((totalGET) => {
       setTotal(totalGET)
+      setDinero(totalGET * precio)
+
     })
   }, [])
 
@@ -47,6 +54,10 @@ const Entrada = ({ tipoEntrada }: { tipoEntrada: string }) => {
   const decreaseButton = async () => {
     await fetchingData(tipoEntrada, 'decrease')
   }
+
+
+  useEffect(() => {
+    setDinero(total * )
 
   return (
 
@@ -64,7 +75,8 @@ const Entrada = ({ tipoEntrada }: { tipoEntrada: string }) => {
             <Flecha rotated />
           </button>
           <p className='text-xl text-center font-semibold'>TOTAL: {total}</p>
-          </>
+          <p className='text-xl text-center font-semibold'>DINERO: {total}</p>
+          </ >
 
       </div>
 

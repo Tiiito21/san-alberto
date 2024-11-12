@@ -1,36 +1,30 @@
 // middleware.ts
-
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-// Lista de orígenes permitidos
-const allowedOrigins = ['http://localhost:3000', 'https://san-alberto.vercel.app']
+export function middleware (req: NextRequest) {
+  // Configura los encabezados CORS
+  const response = NextResponse.next()
+  response.headers.set('Access-Control-Allow-Origin', '*') // Permite todos los orígenes
+  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
 
-export function middleware (request: NextRequest) {
-  const origin = request.headers.get('origin')
-
-  // Verifica si el origen está en la lista de permitidos
-  if (origin && allowedOrigins.includes(origin)) {
-    const response = NextResponse.next()
-
-    // Configura los encabezados CORS para el origen permitido
-    response.headers.set('Access-Control-Allow-Origin', '*')
-    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-    response.headers.set('Access-Control-Allow-Headers', 'Content-Type')
-
-    // Manejo de las solicitudes preflight OPTIONS
-    if (request.method === 'OPTIONS') {
-      return new NextResponse(null, { status: 200, headers: response.headers })
-    }
-
-    return response
+  // Maneja las solicitudes de preflight (OPTIONS)
+  if (req.method === 'OPTIONS') {
+    return new Response(null, {
+      status: 204,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+      }
+    })
   }
 
-  // Si el origen no está permitido, deniega el acceso
-  return new NextResponse('Origen no permitido', { status: 403 })
+  return response
 }
 
-// Configuración para aplicar el middleware solo en las rutas de `/api`
+// Configura las rutas donde quieres aplicar el middleware
 export const config = {
-  matcher: '/api/:path*'
+  matcher: '/api/:path*' // Aplica el middleware solo a las rutas bajo `/api`
 }

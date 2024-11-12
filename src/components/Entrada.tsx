@@ -72,7 +72,7 @@ const Entrada = ({ tipoEntrada }: { tipoEntrada: string }) => {
           </button>
           <p className='text-xl text-center font-semibold'>TOTAL: {total}</p>
           <p className='text-xl text-center font-semibold'>DINERO: {dinero}</p>
-          <p className='text-xl text-center font-semibold'>GANANCIAS: {ganancias}</p>
+          <p className='text-xl text-center font-semibold'>GANANCIAS: {Math.trunc(ganancias * total)}</p>
           </ >
 
       </div>

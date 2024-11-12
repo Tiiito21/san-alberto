@@ -14,7 +14,7 @@ export function middleware (request: NextRequest) {
     const response = NextResponse.next()
 
     // Configura los encabezados CORS para el origen permitido
-    response.headers.set('Access-Control-Allow-Origin', origin)
+    response.headers.set('Access-Control-Allow-Origin', '*')
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
     response.headers.set('Access-Control-Allow-Headers', 'Content-Type')
 
